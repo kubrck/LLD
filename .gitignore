@@ -1,0 +1,5 @@
+# Compiled output
+out/
+
+# JDK bundled in workspace — too large for GitHub
+oracleJdk-26.jdk/

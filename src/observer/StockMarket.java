@@ -29,7 +29,7 @@ public class StockMarket {
     public void setPrice(double newPrice) {
         System.out.printf("%n[Market] %s price changed: $%.2f -> $%.2f%n", symbol, price, newPrice);
         this.price = newPrice;
-        notifyObservers();
+        notifyObservers();// THIS IS THE KEY POINT WHERE THE OBSERVERS ARE NOTIFIED
     }
 
     private void notifyObservers() {
