@@ -17,7 +17,7 @@ classDiagram
         -log(level: String, message: String) void
     }
 
-    Logger --> Logger : returns single instance
+    Logger o--> Logger
 ```
 
 ## Roles

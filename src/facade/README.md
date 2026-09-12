@@ -46,11 +46,11 @@ classDiagram
         +pop() void
     }
 
-    HomeTheaterFacade --> Projector
-    HomeTheaterFacade --> Amplifier
-    HomeTheaterFacade --> StreamingPlayer
-    HomeTheaterFacade --> TheaterLights
-    HomeTheaterFacade --> PopcornPopper
+    HomeTheaterFacade *--> Projector
+    HomeTheaterFacade *--> Amplifier
+    HomeTheaterFacade *--> StreamingPlayer
+    HomeTheaterFacade *--> TheaterLights
+    HomeTheaterFacade *--> PopcornPopper
 ```
 
 ## Roles

@@ -33,8 +33,7 @@ classDiagram
         +build() Pizza
     }
 
-    Pizza +-- PizzaBuilder : inner class
-    PizzaBuilder ..> Pizza : builds
+    Pizza *-- PizzaBuilder
 ```
 
 ## Roles

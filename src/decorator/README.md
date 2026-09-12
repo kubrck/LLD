@@ -41,7 +41,7 @@ classDiagram
 
     Coffee <|.. SimpleCoffee
     Coffee <|.. CoffeeDecorator
-    CoffeeDecorator o--> Coffee : wraps
+    CoffeeDecorator o--> Coffee
     CoffeeDecorator <|-- MilkDecorator
     CoffeeDecorator <|-- SugarDecorator
     CoffeeDecorator <|-- WhipDecorator

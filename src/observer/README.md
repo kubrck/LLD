@@ -36,7 +36,7 @@ classDiagram
 
     StockObserver <|.. InvestorAlert
     StockObserver <|.. TradingBot
-    StockMarket o--> "many" StockObserver : notifies
+    StockMarket o--> "many" StockObserver
 ```
 
 ## Roles

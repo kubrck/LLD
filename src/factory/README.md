@@ -42,9 +42,9 @@ classDiagram
     Vehicle <|.. Car
     Vehicle <|.. Bike
     Vehicle <|.. Truck
-    VehicleFactory ..> Car : creates
-    VehicleFactory ..> Bike : creates
-    VehicleFactory ..> Truck : creates
+    VehicleFactory *--> Car
+    VehicleFactory *--> Bike
+    VehicleFactory *--> Truck
 ```
 
 ## Roles

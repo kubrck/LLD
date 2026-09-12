@@ -33,7 +33,7 @@ classDiagram
 
     FileSystemComponent <|.. File
     FileSystemComponent <|.. Directory
-    Directory o--> "many" FileSystemComponent : contains
+    Directory o--> "many" FileSystemComponent
 ```
 
 ## Roles

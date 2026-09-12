@@ -38,7 +38,7 @@ classDiagram
     PaymentStrategy <|.. CreditCardPayment
     PaymentStrategy <|.. PayPalPayment
     PaymentStrategy <|.. UPIPayment
-    ShoppingCart o--> PaymentStrategy : uses
+    ShoppingCart o--> PaymentStrategy
 ```
 
 ## Roles

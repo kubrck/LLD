@@ -34,19 +34,11 @@ classDiagram
         +checkout(orderTotal: double, currency: String) void
     }
 
-    class PaymentResult {
-        -success: boolean
-        -transactionId: String
-        -message: String
-    }
-
     PaymentProcessor <|.. StripeAdapter
     PaymentProcessor <|.. PayPalAdapter
-    StripeAdapter --> StripeClient : adapts
-    PayPalAdapter --> PayPalGateway : adapts
-    CheckoutService --> PaymentProcessor : uses
-    StripeAdapter ..> PaymentResult : returns
-    PayPalAdapter ..> PaymentResult : returns
+    StripeAdapter o--> StripeClient
+    PayPalAdapter o--> PayPalGateway
+    CheckoutService o--> PaymentProcessor
 ```
 
 ## Roles

@@ -64,7 +64,7 @@ classDiagram
     VendingMachineState <|-- DispenseState
     VendingMachineState <|-- SoldOutState
 
-    VendingMachine *--> VendingMachineState : has-a (state)
+    VendingMachine *--> VendingMachineState
 ```
 
 ## State Transitions

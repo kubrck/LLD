@@ -56,10 +56,10 @@ classDiagram
     Command <|.. LightOnCommand
     Command <|.. LightOffCommand
     Command <|.. FanHighCommand
-    LightOnCommand --> Light : receiver
-    LightOffCommand --> Light : receiver
-    FanHighCommand --> Fan : receiver
-    RemoteControl o--> Command : invokes
+    LightOnCommand o--> Light
+    LightOffCommand o--> Light
+    FanHighCommand o--> Fan
+    RemoteControl o--> Command
 ```
 
 ## Roles
