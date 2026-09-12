@@ -1,4 +1,4 @@
-# State Pattern — ATM Machine
+# State Pattern — Vending Machine
 
 **Intent:** Allow an object to alter its behaviour when its internal state changes. The object will appear to change its class.
 
@@ -6,83 +6,87 @@
 
 ```mermaid
 classDiagram
-    class ATMState {
-        <<interface>>
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
+    class VendingMachineState {
+        <<abstract>>
+        +insertCoin(machine: VendingMachine, coin: int) void
+        +selectItem(machine: VendingMachine) void
+        +dispense(machine: VendingMachine) void
+        +returnCoin(machine: VendingMachine) void
+        +refill(machine: VendingMachine, qty: int) void
     }
 
-    class IdleState {
-        -atm: ATMMachine
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
+    class NoCoinState {
+        +insertCoin(machine: VendingMachine, coin: int) void
+        +selectItem(machine: VendingMachine) void
+        +dispense(machine: VendingMachine) void
+        +returnCoin(machine: VendingMachine) void
+        +refill(machine: VendingMachine, qty: int) void
     }
 
-    class HasCardState {
-        -atm: ATMMachine
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
+    class HasCoinState {
+        +insertCoin(machine: VendingMachine, coin: int) void
+        +selectItem(machine: VendingMachine) void
+        +dispense(machine: VendingMachine) void
+        +returnCoin(machine: VendingMachine) void
+        +refill(machine: VendingMachine, qty: int) void
     }
 
-    class HasCorrectPinState {
-        -atm: ATMMachine
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
+    class DispenseState {
+        +insertCoin(machine: VendingMachine, coin: int) void
+        +selectItem(machine: VendingMachine) void
+        +dispense(machine: VendingMachine) void
+        +returnCoin(machine: VendingMachine) void
+        +refill(machine: VendingMachine, qty: int) void
     }
 
-    class TransactionState {
-        -atm: ATMMachine
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
+    class SoldOutState {
+        +insertCoin(machine: VendingMachine, coin: int) void
+        +selectItem(machine: VendingMachine) void
+        +dispense(machine: VendingMachine) void
+        +returnCoin(machine: VendingMachine) void
+        +refill(machine: VendingMachine, qty: int) void
     }
 
-    class ATMMachine {
-        -currentState: ATMState
-        -balance: double
-        +insertCard() void
-        +ejectCard() void
-        +enterPin(pin: int) void
-        +requestCash(amount: double) void
-        +setState(state: ATMState) void
-        +getBalance() double
-        +deductBalance(amount: double) void
+    class VendingMachine {
+        -state: VendingMachineState
+        -itemCount: int
+        -balance: int
+        +insertCoin(coin: int) void
+        +selectItem() void
+        +dispense() void
+        +returnCoin() void
+        +refill(qty: int) void
+        +setState(state: VendingMachineState) void
     }
 
-    ATMState <|.. IdleState
-    ATMState <|.. HasCardState
-    ATMState <|.. HasCorrectPinState
-    ATMState <|.. TransactionState
-    ATMMachine o--> ATMState : currentState
-    IdleState --> ATMMachine : transitions
-    HasCardState --> ATMMachine : transitions
-    HasCorrectPinState --> ATMMachine : transitions
-    TransactionState --> ATMMachine : transitions
+    VendingMachineState <|-- NoCoinState
+    VendingMachineState <|-- HasCoinState
+    VendingMachineState <|-- DispenseState
+    VendingMachineState <|-- SoldOutState
+
+    VendingMachine *--> VendingMachineState : has-a (state)
 ```
 
 ## State Transitions
 
 ```
-[Idle] --insertCard()--> [HasCard] --enterPin(correct)--> [HasCorrectPin] --requestCash()--> [Transaction] --done--> [Idle]
-         |                   |
-         |            enterPin(wrong)
-         |                   ↓
-         |                [Idle]
-         +--ejectCard()-->[Idle]
+[NoCoinState] --insertCoin()--> [HasCoinState] --selectItem()--> [DispenseState] --dispense()--> [NoCoinState]
+                                     |                                                                  |
+                                returnCoin()                                               itemCount==0 |
+                                     |                                                                  ▼
+                                [NoCoinState]                                              [SoldOutState]
+                                                                                                |
+                                                                                            refill()
+                                                                                                |
+                                                                                           [NoCoinState]
 ```
 
 ## Roles
 | Class | Role |
 |---|---|
-| `ATMState` | State interface |
-| `IdleState`, `HasCardState`, `HasCorrectPinState`, `TransactionState` | Concrete states |
-| `ATMMachine` | Context — delegates all operations to current state |
+| `VendingMachineState` | Abstract state — defines all operations; `machine` passed as parameter so states need no back-reference |
+| `NoCoinState` | Waiting for coin |
+| `HasCoinState` | Coin inserted, waiting for item selection |
+| `DispenseState` | Dispensing item |
+| `SoldOutState` | No items left |
+| `VendingMachine` | Context — delegates all calls to current state, passing `this` |
