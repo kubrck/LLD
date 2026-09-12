@@ -33,6 +33,8 @@ public class StockMarket {
     }
 
     private void notifyObservers() {
-        observers.forEach(o -> o.update(symbol, price));
+        for (StockObserver observer : observers) {
+            observer.update(symbol, price);
+        }
     }
 }

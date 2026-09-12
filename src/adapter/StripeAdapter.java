@@ -24,3 +24,4 @@ public class StripeAdapter implements PaymentProcessor {
         return new PaymentResult(success, response.chargeId, "Stripe: " + response.status);
     }
 }
+
