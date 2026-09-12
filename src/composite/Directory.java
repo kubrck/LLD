@@ -6,6 +6,7 @@ import java.util.List;
 /*
  * Composite — can contain both Files (leaves) and other Directories.
  * Delegates size calculation and display recursively to children.
+ * has both is-a and has-a relationship with FileSystemComponent
  */
 public class Directory implements FileSystemComponent {
 
@@ -38,6 +39,8 @@ public class Directory implements FileSystemComponent {
     @Override
     public void display(String indent) {
         System.out.printf("%s📁 %s (%d KB)%n", indent, name, getSize());
-        children.forEach(child -> child.display(indent + "  "));
+        for(FileSystemComponent child: children){
+            child.display(indent + "  ");
+        }
     }
 }
